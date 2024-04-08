@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Sign-up Sheet</title>
+  <style>
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="text"].valid, select.valid, textarea.valid {
+      border-color: green;
+    }
+    input[type="text"].invalid, select.invalid, textarea.invalid {
+      border-color: red;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Sign-up Sheet</h2>
+
+<form id="signupForm" onsubmit="return false;">
+  <fieldset>
+    <legend>Personal Information</legend>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" onblur="validateInput(this)" onfocus="clearBorder(this)">
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" onblur="validateInput(this)" onfocus="clearBorder(this)">
+    <label for="email">Email:</label>
+    <input type="text" id="email" onblur="validateInput(this)" onfocus="clearBorder(this)">
+    <label for="address">Address:</label>
+    <textarea id="address" rows="4" onblur="validateInput(this)" onfocus="clearBorder(this)"></textarea>
+    <label for="gender">Gender:</label>
+    <select id="gender" onblur="validateInput(this)" onfocus="clearBorder(this)">
+      <option value="" disabled selected>Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Prefer not to mention</option>
+    </select>
+    <label for="interests">Interests:</label>
+    <textarea id="interests" rows="4" onblur="validateInput(this)" onfocus="clearBorder(this)"></textarea>
+  </fieldset>
+  <button onclick="submitForm()">Submit</button>
+  <button type="reset">Reset</button>
+</form>
+
+<div id="output"></div>
+
+<script>
+  function validateInput(input) {
+    if (input.value.trim() === "") {
+      input.classList.remove("valid");
+      input.classList.add("invalid");
+    } else {
+      input.classList.remove("invalid");
+      input.classList.add("valid");
+    }
+  }
+
+  function clearBorder(input) {
+    input.classList.remove("valid", "invalid");
+  }
+
+  function submitForm() {
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const gender = document.getElementById("gender").value;
+    const interests = document.getElementById("interests").value.trim();
+    
+    const outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = `
+      <h3>Submitted Information:</h3>
+      <p>First Name: ${firstName}</p>
+      <p>Last Name: ${lastName}</p>
+      <p>Email: ${email}</p>
+      <p>Address: ${address}</p>
+      <p>Gender: ${gender}</p>
+      <p>Interests: ${interests}</p>
+    `;
+  }
+</script>
+
+</body>
+</html>
